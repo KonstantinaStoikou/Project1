@@ -6,4 +6,4 @@
 * Complete code to read input files
 
 ### Until Friday 11/10
-* Complete LHS algorithm
+* Complete LHS algorithm for d-dimensional space
