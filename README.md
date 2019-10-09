@@ -1,8 +1,9 @@
 # Project1
 
 ## Plan 
-### Until Wednesday 9/10
-* Complete Manhattan distance algorithm
+### Until Thursday 10/10
+* h function
+* φ function
 * Complete code to read input files
 
 ### Until Friday 11/10
