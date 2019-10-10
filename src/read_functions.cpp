@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 
-int read_vectors_file(const char *filename) {
+int read_vectors_file(const char *filename,
+                      std::vector<std::vector<int>> &points) {
     std::ifstream infile;
     infile.open(filename, std::ios::in);
     if (!infile.is_open()) {
@@ -13,12 +14,13 @@ int read_vectors_file(const char *filename) {
     }
     std::string line;
     while (std::getline(infile, line)) {
+        int num;
+        std::vector<int> dims;
         std::stringstream ss(line);
-        std::istream_iterator<std::string> begin(ss);
-        std::istream_iterator<std::string> end;
-        std::vector<std::string> vstrings(begin, end);
-        std::copy(vstrings.begin(), vstrings.end(),
-                  std::ostream_iterator<std::string>(std::cout, "\n"));
+        while (ss >> num) {
+            dims.push_back(num);
+        }
+        points.push_back(dims);
     }
     infile.close();
     return 0;
