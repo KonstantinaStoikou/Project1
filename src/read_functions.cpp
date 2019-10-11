@@ -1,3 +1,4 @@
+#include "../include/read_functions.h"
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -5,8 +6,7 @@
 #include <string>
 #include <vector>
 
-int read_vectors_file(const char *filename,
-                      std::vector<std::vector<int>> &points) {
+int read_vectors_file(const char *filename, std::vector<Point> &points) {
     std::ifstream infile;
     infile.open(filename, std::ios::in);
     if (!infile.is_open()) {
@@ -20,7 +20,14 @@ int read_vectors_file(const char *filename,
         while (ss >> num) {
             dims.push_back(num);
         }
-        points.push_back(dims);
+        Point *ptr = new Point(dims);
+        std::cout << "NEW: ";
+        for (std::vector<int>::const_iterator i = ptr->get_vector().begin();
+             i != ptr->get_vector().end(); ++i)
+
+            std::cout << *i << " ";
+        points.push_back(*ptr);
+        std::cout << "\n";
     }
     infile.close();
     return 0;
