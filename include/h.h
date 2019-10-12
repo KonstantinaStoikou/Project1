@@ -12,7 +12,7 @@ private:
 public:
 	h::h(int k,int dimension,int w);
 	h::~h();
-	int h:: h_func(int X[], int S[], int dimension, int m, int M);
+	int h:: h_func(Point X);
 	int h::a(int x, int s, int w);
 }
 
