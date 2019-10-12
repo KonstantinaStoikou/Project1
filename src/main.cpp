@@ -39,7 +39,23 @@ int main(int argc, char const *argv[]) {
     read_lsh_arguments(argc, argv, infile, query_file, outfile, k, L);
     print_arguments(infile, query_file, outfile, k, L);
     // if files not given ask for user input
-    // code goes here ...
+    if (infile.empty()) {
+        std::cout << GREEN << "Please give input file:\n" << RESET;
+        std::cin >> infile;
+    }
+
+    // here we create search structure (lsh etc.)
+
+    if (query_file.empty()) {
+        std::cout << GREEN << "Please give query file:\n" << RESET;
+        std::cin >> query_file;
+    }
+    if (outfile.empty()) {
+        std::cout << GREEN << "Please give output file:\n" << RESET;
+        std::cin >> outfile;
+    }
+    print_arguments(infile, query_file, outfile, k, L);
+
     if (read_vectors_file("../sample datasets/vectors/siftsmall/query_small_id",
                           points) < 0) {
         std::cout << "error";
