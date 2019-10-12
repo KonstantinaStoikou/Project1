@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/hash_functions.h"
+#include "../include/hash.h"
 #include "../include/point.h"
 #include "../include/read_functions.h"
 
