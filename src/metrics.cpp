@@ -1,3 +1,10 @@
 #include "metrics.h"
 
-int manhattan_dist(int x, int s, int w) { return (x - s) / w; }
+int manhattan_dist(int x, int y) { 
+	int sub;
+	sub=x-y;
+	if(sub<0;){
+		sub=y-x;
+	}
+	return sub;
+}
