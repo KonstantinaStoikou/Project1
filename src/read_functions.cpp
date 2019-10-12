@@ -21,13 +21,7 @@ int read_vectors_file(const std::string filename, std::vector<Point> &points) {
             dims.push_back(num);
         }
         Point *ptr = new Point(dims);
-        std::cout << "NEW: ";
-        for (std::vector<int>::const_iterator i = ptr->get_vector().begin();
-             i != ptr->get_vector().end(); ++i)
-
-            std::cout << *i << " ";
         points.push_back(*ptr);
-        std::cout << "\n";
     }
     infile.close();
     return 0;

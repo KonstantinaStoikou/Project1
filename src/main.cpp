@@ -14,12 +14,10 @@
 
 void print_vectors(std::vector<Point> &points) {
     // print vector of vectors with points
-    for (std::vector<Point>::iterator iti = points.begin(); iti != points.end();
-         ++iti) {
+    for (auto i : points) {
         std::cout << "New Point: ";
-        for (std::vector<int>::iterator itj = iti->get_vector().begin();
-             itj != iti->get_vector().end(); ++itj) {
-            std::cout << *itj << " ";
+        for (auto j : i.get_vector()) {
+            std::cout << j << " ";
         }
         std::cout << "\n";
     }
@@ -36,10 +34,12 @@ void print_arguments(std::string infile, std::string query_file,
 
 int main(int argc, char const *argv[]) {
     std::string infile, query_file, outfile;
-    int k, L;
+    int k = 4, L = 5;  // initialize k, L with default values
     std::vector<Point> points;
     read_lsh_arguments(argc, argv, infile, query_file, outfile, k, L);
     print_arguments(infile, query_file, outfile, k, L);
+    // if files not given ask for user input
+    // code goes here ...
     if (read_vectors_file("../sample datasets/vectors/siftsmall/query_small_id",
                           points) < 0) {
         std::cout << "error";
