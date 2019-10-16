@@ -3,31 +3,31 @@
 #include <math.h> /* pow */
 #include <random>
 
-h::h(int k, int dimension, int w) {
+H::H(int k, int dimension, int w) {
     M = pow(2, 32 / k);
     m = pow(2, 32 - 5);
     dim = dimension;
     w = w;
-    std::vector<int> S;
     std::vector<int>::iterator it;
-    std::random_device
-        rd; // Will be used to obtain a seed for the random number engine
+    // rd will be used to obtain a seed for the random number engine
+    std::random_device rd;
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
     std::uniform_real_distribution<> dis(0.0, w);
     for (int n = 0; n < dim; ++n) {
-        it = S.begin();
-        it = S.insert(it, dis(gen));
+        it = s.begin();
+        it = s.insert(it, dis(gen));
     }
 }
 
-h::~h(){};
-int h::h_func(Point X) {
+H::~H(){};
+
+int H::a(int x, int s, int w) { return (x - s) / w; }
+
+int H::h_func(Point X) {
     int h;
     int dim = X.get_vector().size();
     for (unsigned i = 0; i < dim; i++) {
-        h = a(X.at(i), S.at(i), w) * pow(m, dim - 1 - i) % M;
-        i++;
+        h = a(X.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i) % M;
     }
     return h;
 }
-int h::a(int x, int s, int w) { return (x - s) / w; }

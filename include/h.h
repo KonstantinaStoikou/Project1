@@ -1,19 +1,19 @@
-#ifndef H
-#define H
-#include "../include/metrics.h"
+#ifndef H_FUNC
+#define H_FUNC
+
 #include "../include/point.h"
 #include <vector>
 
-class h {
+class H {
   private:
-    int m, M, int dim, int w;
-    std::vector<int> s;
+    int m, M, dim, w;
+    std::vector<int> s; // a vector with numbers from uniform distribution (0,w)
 
   public:
-    h::h(int k, int dimension, int w);
-    h::~h();
-    int h::h_func(Point X);
-    int h::a(int x, int s, int w);
-}
+    H(int k, int dimension, int w);
+    ~H();
+    int a(int x, int s, int w);
+    int h_func(Point X);
+};
 
 #endif

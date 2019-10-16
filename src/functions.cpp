@@ -26,13 +26,11 @@ void print_arguments(std::string infile, std::string query_file,
 
 int find_avg_nn_dist(std::vector<Point> &points) {
     int dist_sum = 0;
-    int count = 0;
     // iterate vector with points
     for (std::size_t i = 0; i < points.size() - 1; i++) {
         int nn_dist = std::numeric_limits<int>::max();
         // for each point calculate distance between all other points
         for (std::size_t j = i + 1; j < points.size(); j++) {
-            count++;
             std::vector<int> point1_vec = points.at(i).get_vector();
             std::vector<int> point2_vec = points.at(j).get_vector();
             int dist = 0;
@@ -45,7 +43,6 @@ int find_avg_nn_dist(std::vector<Point> &points) {
                 nn_dist = dist;
             }
         }
-        count = 0;
         dist_sum += nn_dist;
     }
     return dist_sum / points.size();
