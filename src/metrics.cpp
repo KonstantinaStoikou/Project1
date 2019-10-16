@@ -1,4 +1,4 @@
+#include "../include/metrics.h"
 #include <iostream>
-#include "metrics.h"
 
-int manhattan_dist(int x, int y) { return std::abs(x-y); }
+int manhattan_dist(int x, int y) { return std::abs(x - y); }
