@@ -1,6 +1,7 @@
 #include "../include/read_functions.h"
 #include <cstring>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <vector>
 
@@ -15,10 +16,15 @@ int read_vectors_file(const std::string filename, std::vector<Point> &points) {
         int num;
         std::vector<int> dims;
         std::stringstream ss(line);
+        // pass first number as id of the point
+        int id;
+        ss >> id;
+        // pass all other numbers as values in vector
         while (ss >> num) {
             dims.push_back(num);
         }
-        Point *ptr = new Point(dims);
+        Point *ptr = new Point(id, dims);
+
         points.push_back(*ptr);
     }
     infile.close();

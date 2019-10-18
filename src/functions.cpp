@@ -7,7 +7,7 @@
 void print_vectors(std::vector<Point> &points) {
     // print vector of vectors with points
     for (auto i : points) {
-        std::cout << "New Point: ";
+        std::cout << GREEN << "Point #" << i.get_id() << ": " << RESET;
         for (auto j : i.get_vector()) {
             std::cout << j << " ";
         }

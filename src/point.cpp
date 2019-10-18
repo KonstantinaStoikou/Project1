@@ -1,11 +1,9 @@
 #include "../include/point.h"
 
 Point::Point(int id, std::vector<int> values) {
-    id = id;
+    this->id = id;
     vec = values;
 }
-
-Point::Point(std::vector<int> values) { vec = values; }
 
 Point::~Point(void) {}
 

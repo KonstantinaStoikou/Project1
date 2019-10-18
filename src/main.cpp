@@ -29,12 +29,13 @@ int main(int argc, char const *argv[]) {
     }
     print_arguments(infile, query_file, outfile, k, L);
 
-    if (read_vectors_file("../sample datasets/vectors/siftsmall/test", points) <
-        0) {
+    if (read_vectors_file("../sample datasets/vectors/siftsmall/query_small_id",
+                          points) < 0) {
         std::cout << "error";
     }
-    // print_vectors(points);
+    print_vectors(points);
     int avg_nn_dist = find_avg_nn_dist(points);
+    const int w = 0;
     std::cout << "Average nn distance: " << avg_nn_dist << "\n";
     return 0;
 }
