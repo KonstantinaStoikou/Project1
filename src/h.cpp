@@ -25,8 +25,9 @@ int H::a(int x, int s, int w) { return (x - s) / w; }
 
 int H::h_func(Point x) {
     int h;
-    for (unsigned i = 0; i < dim; i++) {
-        // h = a(x.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i) % M;
+    for (int i = 0; i < dim; i++) {
+        h = a(x.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i);
+        h %= M;
     }
     return h;
 }

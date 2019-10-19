@@ -9,7 +9,7 @@ all: $(TARGET)
 lsh: $(OBJS)
 	$(CC) $(CFLAGS) -o lsh $(OBJS)
 
-main.o: src/main.cpp include/read_functions.h include/hash.h include/point.h include/functions.h
+main.o: src/main.cpp include/read_functions.h include/hash.h include/point.h include/functions.h include/h.h
 	$(CC) $(CFLAGS) -c src/main.cpp
 
 read_functions.o: src/read_functions.cpp include/point.h

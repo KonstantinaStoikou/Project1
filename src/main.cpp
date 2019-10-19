@@ -19,6 +19,14 @@ int main(int argc, char const *argv[]) {
     }
 
     // here we create search structure (lsh etc.)
+    if (read_vectors_file("../sample datasets/vectors/siftsmall/input_small_id",
+                          points) < 0) {
+        std::cout << "error";
+    }
+    print_vectors(points);
+    // const int w = find_avg_nn_dist(points) * 10;
+    const int w = 1464 * 10;
+    std::cout << "Average nn distance: " << w / 10 << "\n";
 
     if (query_file.empty()) {
         std::cout << GREEN << "Please give query file:\n" << RESET;
@@ -30,13 +38,5 @@ int main(int argc, char const *argv[]) {
     }
     print_arguments(infile, query_file, outfile, k, L);
 
-    if (read_vectors_file("../sample datasets/vectors/siftsmall/input_small_id",
-                          points) < 0) {
-        std::cout << "error";
-    }
-    print_vectors(points);
-    // const int w = find_avg_nn_dist(points) * 10;
-    const int w = 1464 * 10;
-    std::cout << "Average nn distance: " << w / 10 << "\n";
     return 0;
 }
