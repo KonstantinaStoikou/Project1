@@ -23,11 +23,10 @@ H::~H(){};
 
 int H::a(int x, int s, int w) { return (x - s) / w; }
 
-int H::h_func(Point X) {
+int H::h_func(Point x) {
     int h;
-    int dim = X.get_vector().size();
     for (unsigned i = 0; i < dim; i++) {
-        h = a(X.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i) % M;
+        // h = a(x.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i) % M;
     }
     return h;
 }

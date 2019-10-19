@@ -1,4 +1,4 @@
-OBJS 	= main.o hash.o read_functions.o point.o functions.o metrics.o
+OBJS 	= main.o hash.o read_functions.o point.o functions.o metrics.o h.o
 CC		= g++
 CFLAGS  = -Wall -g
 TARGET = lsh

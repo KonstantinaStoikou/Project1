@@ -1,5 +1,6 @@
 #include "../include/defines.h"
 #include "../include/functions.h"
+#include "../include/h.h"
 #include "../include/hash.h"
 #include "../include/point.h"
 #include "../include/read_functions.h"
@@ -29,13 +30,13 @@ int main(int argc, char const *argv[]) {
     }
     print_arguments(infile, query_file, outfile, k, L);
 
-    if (read_vectors_file("../sample datasets/vectors/siftsmall/query_small_id",
+    if (read_vectors_file("../sample datasets/vectors/siftsmall/input_small_id",
                           points) < 0) {
         std::cout << "error";
     }
     print_vectors(points);
-    int avg_nn_dist = find_avg_nn_dist(points);
-    const int w = 0;
-    std::cout << "Average nn distance: " << avg_nn_dist << "\n";
+    // const int w = find_avg_nn_dist(points) * 10;
+    const int w = 1464 * 10;
+    std::cout << "Average nn distance: " << w / 10 << "\n";
     return 0;
 }
