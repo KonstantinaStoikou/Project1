@@ -1,4 +1,5 @@
 #include "../include/hash.h"
+#include <iostream>
 
 Hash::Hash(int k, int dims, int w) {
     for (int i = 0; i < k; i++) {
@@ -14,7 +15,8 @@ uint32_t Hash::concat_hash_values(Point p) {
     int k = h_vec.size();
 
     for (auto i : h_vec) {
-        g = (g << (32 / k)) + i.h_func(p);
+        int f = i.h_func(p);
+        g = (g << (32 / k)) + f;
     }
     return g;
 }

@@ -9,8 +9,8 @@ Hashtable::Hashtable(int size, int k, int dims, int w) : g(k, dims, w) {
 Hashtable::~Hashtable() {}
 
 void Hashtable::insert_item(Point *p) {
-
     int index = g.concat_hash_values(*p) % size;
+    std::cout << " Insertes " << p->get_id() << std::endl;
     table[index].push_back(p);
 }
 
@@ -34,8 +34,9 @@ void Hashtable::delete_item(Point *p) {
 void Hashtable::display_hashtable() {
     for (int i = 0; i < size; i++) {
         std::cout << i;
-        for (auto x : table[i])
+        for (auto x : table[i]) {
             std::cout << " --> " << x->get_id();
+        }
         std::cout << std::endl;
     }
 }

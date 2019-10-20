@@ -34,12 +34,13 @@ int main(int argc, char const *argv[]) {
 
     // vector with L hashtables
     std::vector<Hashtable> ht_vec;
+    int table_size = in_points.size() / 2;
     for (int i = 0; i < L; i++) {
         std::cout << "hi" << std::endl;
-        Hashtable *ht = new Hashtable(in_points.size() / 2, k, dims, w);
-        for (auto i : in_points) {
-            std::cout << "hi1" << std::endl;
-            ht->insert_item(&i);
+        Hashtable *ht = new Hashtable(table_size, k, dims, w);
+        for (auto x : in_points) {
+            // std::cout << "id " << x.get_id() << std::endl;
+            ht->insert_item(&x);
         }
         ht_vec.push_back(*ht);
     }

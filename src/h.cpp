@@ -7,7 +7,7 @@ H::H(int k, int dimension, int w) {
     M = pow(2, 32 / k);
     m = pow(2, 32 - 5);
     dim = dimension;
-    w = w;
+    this->w = w;
     std::vector<int>::iterator it;
     // rd will be used to obtain a seed for the random number engine
     std::random_device rd;
@@ -21,13 +21,18 @@ H::H(int k, int dimension, int w) {
 
 H::~H(){};
 
-int H::a(int x, int s, int w) { return (x - s) / w; }
+int H::a(int x, int s, int w) { return floor((double)(x - s) / w); }
 
 int H::h_func(Point x) {
     int h;
     for (int i = 0; i < dim; i++) {
-        h = a(x.get_vector().at(i), s.at(i), w) * pow(m, dim - 1 - i);
-        h %= M;
+        int a_res = a(x.get_vector().at(i), s.at(i), w);
+        double p = pow(m, dim - 1 - i);
+        p = std::fmod(p, M);
+        h = a_res * p;
+        // std::cout << "m: " << p << std::endl;
+        // h %= M;
     }
+    // std::cout << "h: " << h << std::endl;
     return h;
 }
