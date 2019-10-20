@@ -11,5 +11,7 @@ int read_vectors_file(const std::string filename, std::vector<Point> &points);
 void read_lsh_vector_args(int argc, char const *argv[], std::string &infile,
                           std::string &query_file, std::string &outfile, int &k,
                           int &L);
+// If file not given ask for user input
+void ask_file(std::string &file, std::string mes);
 
 #endif

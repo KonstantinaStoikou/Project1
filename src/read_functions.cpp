@@ -1,4 +1,5 @@
 #include "../include/read_functions.h"
+#include "../include/defines.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -46,5 +47,12 @@ void read_lsh_vector_args(int argc, char const *argv[], std::string &infile,
         } else if (strcmp(argv[i], "-o") == 0) {
             outfile = argv[i + 1];
         }
+    }
+}
+
+void ask_file(std::string &file, std::string mes) {
+    if (file.empty()) {
+        std::cout << GREEN << "Please give " << mes << " file\n" << RESET;
+        std::cin >> file;
     }
 }

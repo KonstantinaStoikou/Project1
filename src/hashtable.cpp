@@ -10,8 +10,12 @@ Hashtable::~Hashtable() {}
 
 void Hashtable::insert_item(Point *p) {
     int index = g.concat_hash_values(*p) % size;
-    std::cout << " Insertes " << p->get_id() << std::endl;
     table[index].push_back(p);
+    std::cout << "Index: " << index << std::endl;
+    for (auto x : table[index]) {
+        std::cout << " --> " << x->get_id();
+    }
+    std::cout << std::endl;
 }
 
 void Hashtable::delete_item(Point *p) {

@@ -1,28 +1,7 @@
-#include "../include/functions.h"
-#include "../include/defines.h"
+#include "../include/main_functions.h"
 #include "../include/metrics.h"
 #include <iostream>
 #include <limits>
-
-void print_points(std::vector<Point> points) {
-    // print vector of vectors with points
-    for (auto i : points) {
-        std::cout << GREEN << "Point #" << i.get_id() << ": " << RESET;
-        for (auto j : i.get_vector()) {
-            std::cout << j << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
-void print_arguments(std::string infile, std::string query_file,
-                     std::string outfile, int k, int L) {
-    std::cout << BLUE << "Input file: " << infile << std::endl;
-    std::cout << "Query file: " << query_file << std::endl;
-    std::cout << "Output file: " << outfile << std::endl;
-    std::cout << "k: " << k << std::endl;
-    std::cout << "L: " << L << std::endl << RESET;
-}
 
 int find_avg_nn_dist(std::vector<Point> points) {
     int dist_sum = 0;
@@ -73,10 +52,18 @@ void exhaustive_nn(std::vector<Point> in_points, std::vector<Point> q_points,
     }
 }
 
-void print_nn(std::vector<std::tuple<int, int, float>> nn) {
-    for (auto &tuple : nn) {
-        std::cout << "Point #" << std::get<0>(tuple)
-                  << ": NN: " << std::get<1>(tuple)
-                  << " Dist: " << std::get<2>(tuple) << std::endl;
+void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
+                       int k, std::vector<Point> &in_points, int table_size) {
+    for (int i = 0; i < L; i++) {
+        std::cout << "HT #" << i << std::endl;
+        Hashtable *ht = new Hashtable(table_size, k, dims, w);
+        for (auto x : in_points) {
+            ht->insert_item(&x);
+        }
+        ht_vec.push_back(ht);
     }
+
+    ht_vec.at(0)->display_hashtable();
 }
+
+// vgazo iostream!
