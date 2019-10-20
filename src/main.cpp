@@ -1,7 +1,6 @@
 #include "../include/defines.h"
 #include "../include/functions.h"
-#include "../include/h.h"
-#include "../include/hash.h"
+#include "../include/hashtable.h"
 #include "../include/point.h"
 #include "../include/read_functions.h"
 #include <iostream>
@@ -22,15 +21,30 @@ int main(int argc, char const *argv[]) {
     // here we create search structure (lsh etc.)
     // read file with input points and return them in a vector
     std::vector<Point> in_points;
-    if (read_vectors_file("../sample datasets/vectors/siftsmall/input_small_id",
+    if (read_vectors_file("../sample datasets/vectors/siftsmall/test",
                           in_points) < 0) {
         std::cout << RED << "Error while reading input file." << RESET
                   << std::endl;
     }
-    print_points(in_points);
+    int dims = in_points.at(0).get_vector().size();
+    // print_points(in_points);
     // const int w = find_avg_nn_dist(points) * 10;
     const int w = 1464 * 10;
-    std::cout << "Average nn distance: " << w / 10 << std::endl;
+    // std::cout << "Average nn distance: " << w / 10 << std::endl;
+
+    // vector with L hashtables
+    std::vector<Hashtable> ht_vec;
+    for (int i = 0; i < L; i++) {
+        std::cout << "hi" << std::endl;
+        Hashtable *ht = new Hashtable(in_points.size() / 2, k, dims, w);
+        for (auto i : in_points) {
+            std::cout << "hi1" << std::endl;
+            ht->insert_item(&i);
+        }
+        ht_vec.push_back(*ht);
+    }
+
+    ht_vec.at(0).display_hashtable();
 
     if (query_file.empty()) {
         std::cout << GREEN << "Please give query file:\n" << RESET;
@@ -44,18 +58,18 @@ int main(int argc, char const *argv[]) {
         std::cout << RED << "Error while reading query file." << RESET
                   << std::endl;
     }
-    std::cout << "Query Points are: " << std::endl;
-    print_points(q_points);
-    std::vector<std::tuple<int, int, float>> real_nn;
-    exhaustive_nn(in_points, q_points, real_nn);
-    std::cout << "Real Nearest Neighbors: " << std::endl;
-    print_nn(real_nn);
+    // std::cout << "Query Points are: " << std::endl;
+    // print_points(q_points);
+    // std::vector<std::tuple<int, int, float>> real_nn;
+    // exhaustive_nn(in_points, q_points, real_nn);
+    // std::cout << "Real Nearest Neighbors: " << std::endl;
+    // print_nn(real_nn);
 
-    if (outfile.empty()) {
-        std::cout << GREEN << "Please give output file:\n" << RESET;
-        std::cin >> outfile;
-    }
-    print_arguments(infile, query_file, outfile, k, L);
+    // if (outfile.empty()) {
+    //     std::cout << GREEN << "Please give output file:\n" << RESET;
+    //     std::cin >> outfile;
+    // }
+    // print_arguments(infile, query_file, outfile, k, L);
 
     return 0;
 }

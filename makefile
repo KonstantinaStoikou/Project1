@@ -1,4 +1,4 @@
-OBJS 	= main.o hash.o read_functions.o point.o functions.o metrics.o h.o
+OBJS 	= main.o hash.o read_functions.o point.o functions.o metrics.o h.o hashtable.o
 CC		= g++
 CFLAGS  = -Wall -g
 TARGET = lsh
@@ -9,13 +9,16 @@ all: $(TARGET)
 lsh: $(OBJS)
 	$(CC) $(CFLAGS) -o lsh $(OBJS)
 
-main.o: src/main.cpp include/read_functions.h include/hash.h include/point.h include/functions.h include/h.h
+main.o: src/main.cpp include/read_functions.h include/point.h include/functions.h include/hashtable.h include/defines.h
 	$(CC) $(CFLAGS) -c src/main.cpp
 
 read_functions.o: src/read_functions.cpp include/point.h
 	$(CC) $(CFLAGS) -c src/read_functions.cpp
 
-hash.o: src/hash.cpp 
+hashtable.o: src/hashtable.cpp include/hash.h
+	$(CC) $(CFLAGS) -c src/hashtable.cpp	
+
+hash.o: src/hash.cpp include/h.h
 	$(CC) $(CFLAGS) -c src/hash.cpp
 
 point.o: src/point.cpp

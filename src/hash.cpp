@@ -1,15 +1,20 @@
 #include "../include/hash.h"
 
-Hash::Hash(void) {}
+Hash::Hash(int k, int dims, int w) {
+    for (int i = 0; i < k; i++) {
+        H *h = new H(k, dims, w);
+        h_vec.push_back(*h);
+    }
+}
 
 Hash::~Hash(void) {}
 
-uint32_t concat_hash_values(std::vector<int> h_vec) {
+uint32_t Hash::concat_hash_values(Point p) {
     uint32_t g = 0;
     int k = h_vec.size();
-    std::vector<int>::iterator it;
+
     for (auto i : h_vec) {
-        g = (g << (32 / k)) + i;
+        g = (g << (32 / k)) + i.h_func(p);
     }
     return g;
 }
