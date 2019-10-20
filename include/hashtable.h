@@ -8,16 +8,13 @@
 class Hashtable {
    private:
     int size;
-    Hash g;
-    // Pointer to an array containing buckets
-    std::list<Point *> *table;
+    Hash g;                     // class with hash function
+    std::list<Point *> *table;  // array containing buckets
 
    public:
     Hashtable(int size, int k, int dims, int w);
     ~Hashtable();
-    // inserts a key into hash table
     void insert_item(Point *p);
-    // deletes a key from hash table
     void delete_item(Point *p);
     // hash function to map values to key
     void display_hashtable();

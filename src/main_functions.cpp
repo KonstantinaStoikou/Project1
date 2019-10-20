@@ -57,7 +57,7 @@ void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
     for (int i = 0; i < L; i++) {
         std::cout << "HT #" << i << std::endl;
         Hashtable *ht = new Hashtable(table_size, k, dims, w);
-        for (auto x : in_points) {
+        for (auto &x : in_points) {
             ht->insert_item(&x);
         }
         ht_vec.push_back(ht);
