@@ -49,6 +49,5 @@ int H::h_func(Point x) {
         m_res %= M;
         h += (a_res * m_res) % M;
     }
-    std::cout << "h: " << h % M << std::endl;
-    return h;
+    return h % M;
 }

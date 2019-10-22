@@ -60,5 +60,7 @@ void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
         }
         ht_vec.push_back(ht);
     }
-    ht_vec.at(0)->display_hashtable();
+    for (auto i : ht_vec) {
+        i->display_hashtable();
+    }
 }
