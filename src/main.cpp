@@ -1,10 +1,12 @@
 #include "../include/defines.h"
 #include "../include/hashtable.h"
 #include "../include/main_functions.h"
+#include "../include/metrics.h"
 #include "../include/point.h"
 #include "../include/print_functions.h"
 #include "../include/read_functions.h"
 #include <iostream>
+#include <limits>
 
 int main(int argc, char const *argv[]) {
     std::string infile, qfile, outfile;
@@ -19,6 +21,7 @@ int main(int argc, char const *argv[]) {
                           in_points) < 0) {
         std::cout << RED << "Error while reading input file." << RESET
                   << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     int dims = in_points.at(0).get_vector().size();
@@ -39,6 +42,7 @@ int main(int argc, char const *argv[]) {
                           q_points) < 0) {
         std::cout << RED << "Error while reading query file." << RESET
                   << std::endl;
+        exit(EXIT_FAILURE);
     }
     // std::cout << "Query Points are: " << std::endl;
     // print_points(q_points);
@@ -47,6 +51,32 @@ int main(int argc, char const *argv[]) {
     // std::cout << "Real Nearest Neighbors: " << std::endl;
     // print_nn(real_nn);
 
+    // search limit to iterate through "search_lim" points in bucket
+    std::vector<std::tuple<int, int, float>> approx_nn;
+    int search_lim = 3 * L;
+    for (auto q : q_points) {
+        int nn_dist = std::numeric_limits<int>::max();
+        int nn_id;
+        for (auto ht : ht_vec) {
+            int index = ht->get_hash(q) / ht->get_size();
+            std::list<Point *> bucket = ht->get_indexed_bucket(index);
+            for (std::list<Point *>::const_iterator it = bucket.begin();
+                 it != bucket.end() && search_lim > 0; ++it, --search_lim) {
+                int dist = 0;
+                for (std::size_t d = 0; d < q.get_vector().size(); d++) {
+                    dist += manhattan_dist(q.get_vector().at(d),
+                                           (*it)->get_vector().at(d));
+                }
+                // check if this point is nearest than the previous nearest
+                if (dist <= nn_dist) {
+                    nn_dist = dist;
+                    nn_id = (*it)->get_id();
+                }
+            }
+        }
+        approx_nn.push_back({q.get_id(), nn_id, nn_dist});
+    }
+    print_nn(approx_nn);
     // ask_file(outfile, "output");
     // print_arguments(infile, qfile, outfile, k, L);
 

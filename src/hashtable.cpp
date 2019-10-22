@@ -13,6 +13,18 @@ void Hashtable::insert_item(Point *p) {
     table[index].push_back(p);
 }
 
+uint32_t Hashtable::get_hash(Point p) { return g.concat_hash_values(p); }
+
+int Hashtable::get_size(void) { return size; }
+
+std::list<Point *> Hashtable::get_indexed_bucket(int index) {
+    if (table[index].empty()) {
+        std::cout << "NUll" << std::endl;
+    }
+
+    return table[index];
+}
+
 void Hashtable::delete_item(Point *p) {
     // get the hash index of key
     int index = g.concat_hash_values(*p) % size;
