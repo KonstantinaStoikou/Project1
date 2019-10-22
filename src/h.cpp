@@ -25,27 +25,30 @@ H::~H(){};
 int H::a(int x, int s, int w) { return floor((double)(x - s) / w); }
 
 int H::h_func(Point x) {
+    // calculate h using modulo properties:
+    // 1. (a+b) mod c = ((a mod c) + (b mod c)) mod c
+    // 2. (a*b) mod c = ((a mod c) * (b mod c)) mod c
+    // 3. a^b mod c = ( (a mod c)^b ) mod c
+    // 4. (a mod c) mod c = a mod c
+    // h(x) = (a^(d−1) + m*a^(d−2) + ... + m^(d−1)*a^0) mod M
     int h;
     int m_mod_M = m % M;
     for (int i = 0; i < dim; i++) {
-        int a_res = a(x.get_vector().at(i), s.at(i), w) % M;
-        // std::cout << "m: " << m << std::endl;
-        // std::cout << "M: " << M << std::endl;
-        // std::cout << "(m mod M)^(Dim-1-i): " << m_mod_M << " " << dim - 1 - i
-        //           << std::endl;
-        // calaculate pow %M using modular exponentiation property:
-        // (a^b) mod c = (a mod c)^b mod c
-        unsigned long p = pow(m_mod_M, dim - 1 - i);
-        // std::cout << "P before: " << p << std::endl;
-        p = p % M;
-        h += (a_res * p) % M;
-
-        // std::cout << "X: " << x.get_vector().at(i) << " S: " << s.at(i)
-        //           << std::endl;
-        // std::cout << "A: " << a_res << std::endl;
-        // std::cout << "Pow: " << p << std::endl;
-        // std::cout << std::endl;
+        unsigned long int a_res = a(x.get_vector().at(i), s.at(i), w) % M;
+        unsigned long m_res = 1;
+        int end = i > dim - 1 - i ? i : dim - 1 - i;
+        for (int j = 0; j < end; j++) {
+            if (j < i) {
+                a_res *= a_res % M;
+            }
+            if (j < dim - i - 1) {
+                m_res *= m_mod_M % M;
+            }
+        }
+        a_res %= M;
+        m_res %= M;
+        h += (a_res * m_res) % M;
     }
-    std::cout << "h: " << h << std::endl;
+    std::cout << "h: " << h % M << std::endl;
     return h;
 }
