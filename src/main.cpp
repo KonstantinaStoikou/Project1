@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
     int dims = in_points.at(0).get_vector().size();
     // print_points(in_points);
     // const int w = find_avg_nn_dist(points) * 10;
-    const int w = 1464 * 10;
+    const int w = 1464 * 4;
     // std::cout << "Average nn distance: " << w / 10 << std::endl;
     int table_size = in_points.size() / 2;
     // create vector with L hashtables

@@ -1,6 +1,5 @@
 #include "../include/main_functions.h"
 #include "../include/metrics.h"
-#include <iostream>
 #include <limits>
 
 int find_avg_nn_dist(std::vector<Point> points) {
@@ -55,15 +54,11 @@ void exhaustive_nn(std::vector<Point> in_points, std::vector<Point> q_points,
 void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
                        int k, std::vector<Point> &in_points, int table_size) {
     for (int i = 0; i < L; i++) {
-        std::cout << "HT #" << i << std::endl;
         Hashtable *ht = new Hashtable(table_size, k, dims, w);
         for (auto &x : in_points) {
             ht->insert_item(&x);
         }
         ht_vec.push_back(ht);
     }
-
     ht_vec.at(0)->display_hashtable();
 }
-
-// vgazo iostream!

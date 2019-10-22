@@ -6,7 +6,8 @@
 
 class H {
   private:
-    int m, M, dim, w;
+    unsigned long m, M;
+    int dim, w;
     std::vector<int> s; // a vector with numbers from uniform distribution (0,w)
     int a(int x, int s, int w);
 

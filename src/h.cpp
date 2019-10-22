@@ -5,7 +5,8 @@
 
 H::H(int k, int dimension, int w) {
     M = pow(2, 32 / k);
-    m = pow(2, 32 - 5);
+    m = pow(2, 32);
+    m -= 5;
     dim = dimension;
     this->w = w;
     std::vector<int>::iterator it;
@@ -25,14 +26,26 @@ int H::a(int x, int s, int w) { return floor((double)(x - s) / w); }
 
 int H::h_func(Point x) {
     int h;
+    int m_mod_M = m % M;
     for (int i = 0; i < dim; i++) {
-        int a_res = a(x.get_vector().at(i), s.at(i), w);
-        double p = pow(m, dim - 1 - i);
-        p = std::fmod(p, M);
-        h = a_res * p;
-        // std::cout << "m: " << p << std::endl;
-        // h %= M;
+        int a_res = a(x.get_vector().at(i), s.at(i), w) % M;
+        // std::cout << "m: " << m << std::endl;
+        // std::cout << "M: " << M << std::endl;
+        // std::cout << "(m mod M)^(Dim-1-i): " << m_mod_M << " " << dim - 1 - i
+        //           << std::endl;
+        // calaculate pow %M using modular exponentiation property:
+        // (a^b) mod c = (a mod c)^b mod c
+        unsigned long p = pow(m_mod_M, dim - 1 - i);
+        // std::cout << "P before: " << p << std::endl;
+        p = p % M;
+        h += (a_res * p) % M;
+
+        // std::cout << "X: " << x.get_vector().at(i) << " S: " << s.at(i)
+        //           << std::endl;
+        // std::cout << "A: " << a_res << std::endl;
+        // std::cout << "Pow: " << p << std::endl;
+        // std::cout << std::endl;
     }
-    // std::cout << "h: " << h << std::endl;
+    std::cout << "h: " << h << std::endl;
     return h;
 }
