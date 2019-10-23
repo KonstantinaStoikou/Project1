@@ -7,12 +7,14 @@
 class H {
   private:
     unsigned long m, M;
-    int dim, w;
-    std::vector<int> s; // a vector with numbers from uniform distribution (0,w)
-    int a(int x, int s, int w);
+    int dim;
+    double w;
+    // a vector with numbers from uniform distribution (0,w)
+    std::vector<float> s;
+    int a(int x, float s);
 
   public:
-    H(int k, int dimension, int w);
+    H(int k, int dimension, double w);
     ~H();
     int h_func(Point X);
 };

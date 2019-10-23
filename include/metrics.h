@@ -1,6 +1,6 @@
 #ifndef METRICS
 #define METRICS
 
-int manhattan_dist(int x, int y);
+double manhattan_dist(double x, double y);
 
 #endif

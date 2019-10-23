@@ -3,13 +3,13 @@
 #include <math.h> /* pow */
 #include <random>
 
-H::H(int k, int dimension, int w) {
+H::H(int k, int dimension, double w) {
     M = pow(2, 32 / k);
     m = pow(2, 32);
     m -= 5;
     dim = dimension;
     this->w = w;
-    std::vector<int>::iterator it;
+    std::vector<float>::iterator it;
     // rd will be used to obtain a seed for the random number engine
     std::random_device rd;
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
@@ -22,7 +22,7 @@ H::H(int k, int dimension, int w) {
 
 H::~H(){};
 
-int H::a(int x, int s, int w) { return floor((double)(x - s) / w); }
+int H::a(int x, float s) { return floor((double)(x - s) / w); }
 
 int H::h_func(Point x) {
     // calculate h using modulo properties:
@@ -34,7 +34,7 @@ int H::h_func(Point x) {
     int h;
     int m_mod_M = m % M;
     for (int i = 0; i < dim; i++) {
-        unsigned long int a_res = a(x.get_vector().at(i), s.at(i), w) % M;
+        unsigned long int a_res = a(x.get_vector().at(i), s.at(i)) % M;
         unsigned long m_res = 1;
         int end = i > dim - 1 - i ? i : dim - 1 - i;
         for (int j = 0; j < end; j++) {
