@@ -18,10 +18,6 @@ uint32_t Hashtable::get_hash(Point p) { return g.concat_hash_values(p); }
 int Hashtable::get_size(void) { return size; }
 
 std::list<Point *> Hashtable::get_indexed_bucket(int index) {
-    if (table[index].empty()) {
-        std::cout << "NUll" << std::endl;
-    }
-
     return table[index];
 }
 

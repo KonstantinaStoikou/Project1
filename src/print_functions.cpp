@@ -1,5 +1,6 @@
 #include "../include/print_functions.h"
 #include "../include/defines.h"
+#include <fstream>
 #include <iostream>
 
 void print_points(std::vector<Point> points) {
@@ -27,5 +28,24 @@ void print_nn(std::vector<std::tuple<int, int, float>> nn) {
         std::cout << "Point #" << std::get<0>(tuple)
                   << ": NN: " << std::get<1>(tuple)
                   << " Dist: " << std::get<2>(tuple) << std::endl;
+    }
+}
+
+void write_outfile(std::string filename,
+                   std::vector<std::tuple<int, int, float>> real_nn,
+                   std::vector<std::tuple<int, int, float>> approx_nn,
+                   int time1, int time2) {
+    std::ofstream file;
+    // open file and overwrite it if it exists, or create it if it doesn't exist
+    file.open(filename, std::ios::out);
+    for (unsigned int i = 0; i < real_nn.size(); i++) {
+        file << "Query: " << std::get<0>(real_nn.at(i)) << std::endl;
+        file << "Nearest Neighbor: " << std::get<1>(approx_nn.at(i))
+             << std::endl;
+        file << "DistanceLSH: " << std::get<2>(approx_nn.at(i)) << std::endl;
+        file << "DistanceTrue: " << std::get<2>(real_nn.at(i)) << std::endl;
+        file << "tLSH: " << time1 << std::endl;
+        file << "tTrue: " << time1 << std::endl;
+        file << std::endl;
     }
 }

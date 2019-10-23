@@ -60,7 +60,49 @@ void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
         }
         ht_vec.push_back(ht);
     }
-    for (auto i : ht_vec) {
-        i->display_hashtable();
+}
+
+void lsh_search(std::vector<Hashtable *> ht_vec, std::vector<Point> q_points,
+                std::vector<std::tuple<int, int, float>> &nn,
+                int search_limit) {
+    for (auto q : q_points) {
+        float nn_dist = std::numeric_limits<float>::max();
+        int nn_id;
+        for (auto ht : ht_vec) {
+            int limit = search_limit;
+            int index = ht->get_hash(q) % ht->get_size();
+            std::list<Point *> bucket = ht->get_indexed_bucket(index);
+            for (std::list<Point *>::const_iterator it = bucket.begin();
+                 it != bucket.end() && limit > 0; ++it, --limit) {
+                // if (ht->get_hash(q) == ht->get_hash(**it)) {
+                int dist = 0;
+                for (std::size_t d = 0; d < q.get_vector().size(); d++) {
+                    dist += manhattan_dist(q.get_vector().at(d),
+                                           (*it)->get_vector().at(d));
+                }
+                // check if this point is nearest than the previous nearest
+                if (dist <= nn_dist) {
+                    nn_dist = dist;
+                    nn_id = (*it)->get_id();
+                }
+                // }
+            }
+        }
+        if (nn_dist == std::numeric_limits<float>::max()) {
+            nn.push_back({q.get_id(), -1, -1});
+        } else {
+            nn.push_back({q.get_id(), nn_id, nn_dist});
+        }
     }
+}
+
+float find_accuracy(std::vector<std::tuple<int, int, float>> real_nn,
+                    std::vector<std::tuple<int, int, float>> approx_nn) {
+    int correct_num = 0;
+    for (unsigned int i = 0; i < real_nn.size(); i++) {
+        if (std::get<2>(real_nn.at(i)) == std::get<2>(approx_nn.at(i))) {
+            correct_num++;
+        }
+    }
+    return (float)correct_num / real_nn.size();
 }

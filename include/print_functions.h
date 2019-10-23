@@ -13,5 +13,10 @@ void print_arguments(std::string infile, std::string query_file,
                      std::string outfile, int k, int L);
 // Print the tuples (id, distance) of the nearest neighbors
 void print_nn(std::vector<std::tuple<int, int, float>> nn);
+// Write results to output file
+void write_outfile(std::string filename,
+                   std::vector<std::tuple<int, int, float>> real_nn,
+                   std::vector<std::tuple<int, int, float>> approx_nn,
+                   int time1, int time2);
 
 #endif
