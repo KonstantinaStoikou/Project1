@@ -9,7 +9,9 @@ Hash::Hash(int k, int dims, int w) {
     }
 }
 
-Hash::~Hash(void) {}
+Hash::~Hash(void) {
+    delete h;
+}
 
 uint32_t Hash::concat_hash_values(Point p) {
     uint32_t g = 0;

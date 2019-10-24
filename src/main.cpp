@@ -63,6 +63,9 @@ int main(int argc, char const *argv[]) {
     std::cout << YELLOW << "Mean Absolute Error: "
               << find_mean_absolute_error(real_nn, approx_nn) << YELLOW
               << std::endl;
+    in_points.clear();
+    q_points.clear();
+
 
     return 0;
 }

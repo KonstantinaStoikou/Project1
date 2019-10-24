@@ -6,7 +6,9 @@ Hashtable::Hashtable(int size, int k, int dims, int w) : g(k, dims, w) {
     table = new std::list<Point *>[size];
 }
 
-Hashtable::~Hashtable() {}
+Hashtable::~Hashtable() {
+    delete table;
+}
 
 void Hashtable::insert_item(Point *p) {
     int index = g.concat_hash_values(*p) % size;

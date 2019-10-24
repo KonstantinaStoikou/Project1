@@ -1,6 +1,6 @@
 OBJS 	= main.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable.o print_functions.o
 CC		= g++
-CFLAGS  = -Wall -g
+CFLAGS  = -std=c++11 -Wall -g
 TARGET = lsh
 
 .PHONY : all
