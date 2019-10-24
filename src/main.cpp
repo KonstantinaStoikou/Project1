@@ -65,7 +65,10 @@ int main(int argc, char const *argv[]) {
               << std::endl;
     in_points.clear();
     q_points.clear();
-
+    for (auto ht : ht_vec) {
+        delete ht;
+    }
+    ht_vec.clear();
 
     return 0;
 }

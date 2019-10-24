@@ -7,6 +7,7 @@ Hashtable::Hashtable(int size, int k, int dims, int w) : g(k, dims, w) {
 }
 
 Hashtable::~Hashtable() {
+    g.~Hash();
     delete table;
 }
 
