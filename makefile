@@ -12,6 +12,9 @@ lsh: $(OBJS1)
 main_lsh.o: src/main_lsh.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_lsh.h include/defines.h include/print_functions.h
 	$(CC) $(CFLAGS) -c src/main_lsh.cpp
 
+# main_hashtable_cube.o: src/main_hashtable_cube.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_cube.h include/defines.h include/print_functions.h
+#	$(CC) $(CFLAGS) -c src/main_hashtable_cube.cpp
+
 read_functions.o: src/read_functions.cpp include/point.h include/defines.h
 	$(CC) $(CFLAGS) -c src/read_functions.cpp
 
