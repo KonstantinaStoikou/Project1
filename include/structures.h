@@ -1,11 +1,11 @@
 #ifndef STRUCTURES
 #define STRUCTURES
-#include <list>
 #include "hash.h"
 #include "point.h"
+#include <list>
 
-struct struct_hashtable{
-    std::list<Point *> *cell;
+struct struct_hashtable {
+    std::list<Point *> cell;
     int bin;
 };
 
