@@ -1,19 +1,19 @@
-#ifndef HASHTABLE
-#define HASHTABLE
+#ifndef HASHTABLE_LSH
+#define HASHTABLE_LSH
 
 #include <list>
 #include "hash.h"
 #include "point.h"
 
-class Hashtable {
+class Hashtable_LSH {
    private:
     int size;
     Hash g;                     // class with hash function
     std::list<Point *> *table;  // array of buckets
 
    public:
-    Hashtable(int size, int k, int dims, int w);
-    ~Hashtable();
+    Hashtable_LSH(int size, int k, int dims, int w);
+    ~Hashtable_LSH();
     void insert_item(Point *p);
     // return the hash (key) of the point
     uint32_t get_hash(Point p);

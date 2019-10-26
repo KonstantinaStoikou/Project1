@@ -15,8 +15,7 @@ void print_arguments(std::string infile, std::string query_file,
 void print_nn(std::vector<std::tuple<int, int, double>> nn);
 // Write results to output file
 void write_outfile(std::string filename,
-                   std::vector<std::tuple<int, int, double>> real_nn,
-                   std::vector<std::tuple<int, int, double>> approx_nn,
-                   double tTrue, double tLSH);
+                   std::vector<std::tuple<int, int, double, double>> real_nn,
+                   std::vector<std::tuple<int, int, double, double>> approx_nn);
 
 #endif

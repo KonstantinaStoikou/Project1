@@ -1,4 +1,4 @@
-OBJS 	= main.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable.o print_functions.o
+OBJS1 	= main_lsh.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable_lsh.o print_functions.o
 CC		= g++
 CFLAGS  = -std=c++11 -Wall -g
 TARGET = lsh
@@ -6,17 +6,17 @@ TARGET = lsh
 .PHONY : all
 all: $(TARGET) 
 
-lsh: $(OBJS)
-	$(CC) $(CFLAGS) -o lsh $(OBJS)
+lsh: $(OBJS1)
+	$(CC) $(CFLAGS) -o lsh $(OBJS1)
 
-main.o: src/main.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable.h include/defines.h include/print_functions.h
-	$(CC) $(CFLAGS) -c src/main.cpp
+main_lsh.o: src/main_lsh.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_lsh.h include/defines.h include/print_functions.h
+	$(CC) $(CFLAGS) -c src/main_lsh.cpp
 
 read_functions.o: src/read_functions.cpp include/point.h include/defines.h
 	$(CC) $(CFLAGS) -c src/read_functions.cpp
 
-hashtable.o: src/hashtable.cpp include/hash.h
-	$(CC) $(CFLAGS) -c src/hashtable.cpp	
+hashtable_lsh.o: src/hashtable_lsh.cpp include/hash.h
+	$(CC) $(CFLAGS) -c src/hashtable_lsh.cpp	
 
 hash.o: src/hash.cpp include/h.h
 	$(CC) $(CFLAGS) -c src/hash.cpp
@@ -38,7 +38,7 @@ print_functions.o: src/print_functions.cpp
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS1) $(TARGET)
 
 	  
 

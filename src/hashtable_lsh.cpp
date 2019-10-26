@@ -1,30 +1,30 @@
-#include "../include/hashtable.h"
+#include "../include/hashtable_lsh.h"
 #include <iostream>
 
-Hashtable::Hashtable(int size, int k, int dims, int w) : g(k, dims, w) {
+Hashtable_LSH::Hashtable_LSH(int size, int k, int dims, int w) : g(k, dims, w) {
     this->size = size;
     table = new std::list<Point *>[size];
 }
 
-Hashtable::~Hashtable() {
+Hashtable_LSH::~Hashtable_LSH() {
     g.~Hash();
     delete table;
 }
 
-void Hashtable::insert_item(Point *p) {
+void Hashtable_LSH::insert_item(Point *p) {
     int index = g.concat_hash_values(*p) % size;
     table[index].push_back(p);
 }
 
-uint32_t Hashtable::get_hash(Point p) { return g.concat_hash_values(p); }
+uint32_t Hashtable_LSH::get_hash(Point p) { return g.concat_hash_values(p); }
 
-int Hashtable::get_size(void) { return size; }
+int Hashtable_LSH::get_size(void) { return size; }
 
-std::list<Point *> Hashtable::get_indexed_bucket(int index) {
+std::list<Point *> Hashtable_LSH::get_indexed_bucket(int index) {
     return table[index];
 }
 
-void Hashtable::delete_item(Point *p) {
+void Hashtable_LSH::delete_item(Point *p) {
     // get the hash index of key
     int index = g.concat_hash_values(*p) % size;
 
@@ -41,7 +41,7 @@ void Hashtable::delete_item(Point *p) {
 }
 
 // function to display hash table
-void Hashtable::display_hashtable() {
+void Hashtable_LSH::display_hashtable() {
     for (int i = 0; i < size; i++) {
         std::cout << i;
         for (auto x : table[i]) {

@@ -1,5 +1,6 @@
 #include "../include/main_functions.h"
 #include "../include/metrics.h"
+#include <ctime>
 #include <limits>
 
 double find_avg_nn_dist(std::vector<Point> points) {
@@ -27,9 +28,10 @@ double find_avg_nn_dist(std::vector<Point> points) {
 }
 
 void exhaustive_nn(std::vector<Point> in_points, std::vector<Point> q_points,
-                   std::vector<std::tuple<int, int, double>> &nn) {
+                   std::vector<std::tuple<int, int, double, double>> &nn) {
 
     for (std::size_t i = 0; i < q_points.size(); i++) {
+        clock_t begin = clock();
         double nn_dist = std::numeric_limits<float>::max();
         int id;
         std::vector<int> q_point_vec = q_points.at(i).get_vector();
@@ -47,14 +49,17 @@ void exhaustive_nn(std::vector<Point> in_points, std::vector<Point> q_points,
                 id = in_points.at(j).get_id();
             }
         }
-        nn.push_back({q_points.at(i).get_id(), id, nn_dist});
+        clock_t end = clock();
+        double search_time = double(end - begin) / CLOCKS_PER_SEC;
+        nn.push_back({q_points.at(i).get_id(), id, nn_dist, search_time});
     }
 }
 
-void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
-                       int k, std::vector<Point> &in_points, int table_size) {
+void create_hashtables(std::vector<Hashtable_LSH *> &ht_vec, int L, int dims,
+                       int w, int k, std::vector<Point> &in_points,
+                       int table_size) {
     for (int i = 0; i < L; i++) {
-        Hashtable *ht = new Hashtable(table_size, k, dims, w);
+        Hashtable_LSH *ht = new Hashtable_LSH(table_size, k, dims, w);
         for (auto &x : in_points) {
             ht->insert_item(&x);
         }
@@ -62,10 +67,12 @@ void create_hashtables(std::vector<Hashtable *> &ht_vec, int L, int dims, int w,
     }
 }
 
-void lsh_search(std::vector<Hashtable *> ht_vec, std::vector<Point> q_points,
-                std::vector<std::tuple<int, int, double>> &nn,
+void lsh_search(std::vector<Hashtable_LSH *> ht_vec,
+                std::vector<Point> q_points,
+                std::vector<std::tuple<int, int, double, double>> &nn,
                 int search_limit) {
     for (auto q : q_points) {
+        clock_t begin = clock();
         double nn_dist = std::numeric_limits<float>::max();
         int nn_id;
         for (auto ht : ht_vec) {
@@ -88,16 +95,19 @@ void lsh_search(std::vector<Hashtable *> ht_vec, std::vector<Point> q_points,
                 }
             }
         }
+        clock_t end = clock();
+        double search_time = double(end - begin) / CLOCKS_PER_SEC;
         if (nn_dist == std::numeric_limits<float>::max()) {
-            nn.push_back({q.get_id(), -1, -1});
+            nn.push_back({q.get_id(), -1, -1, search_time});
         } else {
-            nn.push_back({q.get_id(), nn_id, nn_dist});
+            nn.push_back({q.get_id(), nn_id, nn_dist, search_time});
         }
     }
 }
 
-float find_accuracy(std::vector<std::tuple<int, int, double>> real_nn,
-                    std::vector<std::tuple<int, int, double>> approx_nn) {
+float find_accuracy(
+    std::vector<std::tuple<int, int, double, double>> real_nn,
+    std::vector<std::tuple<int, int, double, double>> approx_nn) {
     int correct_num = 0;
     for (unsigned int i = 0; i < real_nn.size(); i++) {
         if (std::get<2>(real_nn.at(i)) == std::get<2>(approx_nn.at(i))) {
@@ -107,9 +117,9 @@ float find_accuracy(std::vector<std::tuple<int, int, double>> real_nn,
     return (float)correct_num / real_nn.size();
 }
 
-double
-find_mean_absolute_error(std::vector<std::tuple<int, int, double>> real_nn,
-                         std::vector<std::tuple<int, int, double>> approx_nn) {
+double find_mean_absolute_error(
+    std::vector<std::tuple<int, int, double, double>> real_nn,
+    std::vector<std::tuple<int, int, double, double>> approx_nn) {
     double err_sum = 0;
     for (unsigned int i = 0; i < real_nn.size(); i++) {
         err_sum +=
@@ -117,4 +127,35 @@ find_mean_absolute_error(std::vector<std::tuple<int, int, double>> real_nn,
     }
 
     return err_sum / real_nn.size();
+}
+
+double
+find_avg_fraction(std::vector<std::tuple<int, int, double, double>> real_nn,
+                  std::vector<std::tuple<int, int, double, double>> approx_nn) {
+    double frac = 0;
+    for (unsigned int i = 0; i < real_nn.size(); i++) {
+        frac += std::get<2>(approx_nn.at(i)) / std::get<2>(real_nn.at(i));
+    }
+    return frac / real_nn.size();
+}
+
+double
+find_max_fraction(std::vector<std::tuple<int, int, double, double>> real_nn,
+                  std::vector<std::tuple<int, int, double, double>> approx_nn) {
+    double max_frac = 0;
+    for (unsigned int i = 0; i < real_nn.size(); i++) {
+        double frac = std::get<2>(approx_nn.at(i)) / std::get<2>(real_nn.at(i));
+        if (frac > max_frac) {
+            max_frac = frac;
+        }
+    }
+    return max_frac;
+}
+
+double find_avg_time(std::vector<std::tuple<int, int, double, double>> nn) {
+    double time = 0;
+    for (unsigned int i = 0; i < nn.size(); i++) {
+        time += std::get<3>(nn.at(i));
+    }
+    return time / nn.size();
 }

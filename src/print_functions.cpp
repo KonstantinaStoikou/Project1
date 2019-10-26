@@ -31,10 +31,10 @@ void print_nn(std::vector<std::tuple<int, int, double>> nn) {
     }
 }
 
-void write_outfile(std::string filename,
-                   std::vector<std::tuple<int, int, double>> real_nn,
-                   std::vector<std::tuple<int, int, double>> approx_nn,
-                   double tTrue, double tLSH) {
+void write_outfile(
+    std::string filename,
+    std::vector<std::tuple<int, int, double, double>> real_nn,
+    std::vector<std::tuple<int, int, double, double>> approx_nn) {
     std::ofstream file;
     // open file and overwrite it if it exists, or create it if it doesn't exist
     file.open(filename, std::ios::out);
@@ -50,8 +50,8 @@ void write_outfile(std::string filename,
                  << std::endl;
         }
         file << "DistanceTrue: " << std::get<2>(real_nn.at(i)) << std::endl;
-        file << "tLSH: " << tLSH << std::endl;
-        file << "tTrue: " << tTrue << std::endl;
+        file << "tLSH: " << std::get<3>(approx_nn.at(i)) << std::endl;
+        file << "tTrue: " << std::get<3>(real_nn.at(i)) << std::endl;
         file << std::endl;
     }
 }
