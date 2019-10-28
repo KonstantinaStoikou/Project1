@@ -6,10 +6,7 @@ Hashtable_LSH::Hashtable_LSH(int size, int k, int dims, int w) : g(k, dims, w) {
     table = new std::list<Point *>[size];
 }
 
-Hashtable_LSH::~Hashtable_LSH() {
-    g.~Hash();
-    delete table;
-}
+Hashtable_LSH::~Hashtable_LSH() { delete[] table; }
 
 void Hashtable_LSH::insert_item(Point *p) {
     int index = g.concat_hash_values(*p) % size;

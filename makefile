@@ -1,6 +1,8 @@
 OBJS1 	= main_lsh.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable_lsh.o print_functions.o
+OBJS2 	= main_lsh.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable_cube.o print_functions.o
 CC		= g++
 CFLAGS  = -std=c++11 -Wall -g
+# TARGET = lsh cube
 TARGET = lsh
 
 .PHONY : all
@@ -9,17 +11,23 @@ all: $(TARGET)
 lsh: $(OBJS1)
 	$(CC) $(CFLAGS) -o lsh $(OBJS1)
 
+# cube: $(OBJS2)
+# 	$(CC) $(CFLAGS) -o cube $(OBJS2)
+
 main_lsh.o: src/main_lsh.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_lsh.h include/defines.h include/print_functions.h
 	$(CC) $(CFLAGS) -c src/main_lsh.cpp
 
-# main_hashtable_cube.o: src/main_hashtable_cube.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_cube.h include/defines.h include/print_functions.h
-#	$(CC) $(CFLAGS) -c src/main_hashtable_cube.cpp
+# main_cube.o: src/main_cube.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_cube.h include/defines.h include/print_functions.h
+# 	$(CC) $(CFLAGS) -c src/main_cube.cpp
 
 read_functions.o: src/read_functions.cpp include/point.h include/defines.h
 	$(CC) $(CFLAGS) -c src/read_functions.cpp
 
 hashtable_lsh.o: src/hashtable_lsh.cpp include/hash.h
 	$(CC) $(CFLAGS) -c src/hashtable_lsh.cpp	
+
+hashtable_cube.o: src/hashtable_cube.cpp include/hash.h
+	$(CC) $(CFLAGS) -c src/hashtable_cube.cpp
 
 hash.o: src/hash.cpp include/h.h
 	$(CC) $(CFLAGS) -c src/hash.cpp

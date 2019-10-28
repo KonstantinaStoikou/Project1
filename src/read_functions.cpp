@@ -24,9 +24,9 @@ int read_vectors_file(const std::string filename, std::vector<Point> &points) {
         while (ss >> num) {
             dims.push_back(num);
         }
-        Point *ptr = new Point(id, dims);
+        Point p(id, dims);
 
-        points.push_back(*ptr);
+        points.push_back(p);
     }
     infile.close();
     return 0;

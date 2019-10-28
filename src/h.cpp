@@ -31,7 +31,7 @@ int H::h_func(Point x) {
     // 3. a^b mod c = ( (a mod c)^b ) mod c
     // 4. (a mod c) mod c = a mod c
     // h(x) = (a^(d−1) + m*a^(d−2) + ... + m^(d−1)*a^0) mod M
-    int h;
+    int h = 0;
     int m_mod_M = m % M;
     for (int i = 0; i < dim; i++) {
         unsigned long int a_res = a(x.get_vector().at(i), s.at(i)) % M;

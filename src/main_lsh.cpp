@@ -25,9 +25,9 @@ int main(int argc, char const *argv[]) {
     int dims = in_points.at(0).get_vector().size();
     // for small dataset: avr_nn_dist = 14641.3
     // for big dataset avr_nn_dist =
-    // const double w = find_avg_nn_dist(in_points) * 10;
-    const double w = 14641.3 * 4;
-    int table_size = in_points.size() / 16;
+    const double w = find_avg_nn_dist(in_points) * 4;
+    // const double w = 14641.3 * 4;
+    int table_size = in_points.size() / 8;
     // create vector with L hashtables
     std::vector<Hashtable_LSH *> ht_vec;
     create_hashtables(ht_vec, L, dims, w, k, in_points, table_size);
@@ -64,13 +64,13 @@ int main(int argc, char const *argv[]) {
     std::cout << YELLOW << "Maximum approximation fraction: "
               << find_max_fraction(real_nn, approx_nn) << YELLOW << std::endl;
     std::cout << YELLOW << "Average search time for approximate neighbors: "
-              << find_avg_time(approx_nn) << YELLOW << std::endl;
+              << find_avg_time(approx_nn) << RESET << std::endl;
+
+    for (int i = 0; i < L; i++) {
+        delete ht_vec[i];
+    }
     in_points.clear();
     q_points.clear();
-    // for (auto ht : ht_vec) {
-    //     delete ht;
-    // }
-    ht_vec.clear();
 
     return 0;
 }

@@ -4,12 +4,12 @@
 
 Hash::Hash(int k, int dims, int w) {
     for (int i = 0; i < k; i++) {
-        H *h = new H(k, dims, w);
-        h_vec.push_back(*h);
+        H h(k, dims, w);
+        h_vec.push_back(h);
     }
 }
 
-Hash::~Hash(void) { h_vec.clear(); }
+Hash::~Hash() {}
 
 uint32_t Hash::concat_hash_values(Point p) {
     uint32_t g = 0;

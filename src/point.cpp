@@ -5,7 +5,7 @@ Point::Point(int id, std::vector<int> values) {
     vec = values;
 }
 
-Point::~Point(void) {}
+Point::~Point() { vec.clear(); }
 
 int Point::get_id(void) { return id; }
 
