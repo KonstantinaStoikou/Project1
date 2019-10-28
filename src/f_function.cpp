@@ -5,9 +5,8 @@
 #include <random>
 
 
-//na bazoume label sta buckets
 
-int f_func(Hash g){
+int f_func(){
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 1);
