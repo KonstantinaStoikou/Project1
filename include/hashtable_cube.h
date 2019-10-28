@@ -17,9 +17,9 @@ class HashtableC {
     HashtableC(int size, int k, int dims, int w);
     ~HashtableC();
     void insert_item(Point *p);
-    uint32_t HashtableC::get_hash(Point p) ;
-    int HashtableC::get_size(void);
-    int HashtableC::get_map(int index);
+    uint32_t get_hash(Point p) ;
+    int get_size(void);
+    int get_map(int index);
     void display_hashtable();
 };
 

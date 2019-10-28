@@ -2,5 +2,5 @@
 #define F_FUNC
 
 
-int f_func(Hash g);
+int f_func();
 #endif
