@@ -8,7 +8,8 @@ Hypercube_Ht::Hypercube_Ht(int size) {
 
 Hypercube_Ht::~Hypercube_Ht() {}
 
-std::size_t hash_function(std::tuple<std::vector<int>, Point *> tup) {
+std::size_t
+Hypercube_Ht::hash_function(std::tuple<std::vector<int>, Point *> tup) {
     std::size_t seed = std::get<0>(tup).size();
     for (auto &i : std::get<0>(tup)) {
         seed ^= i + 0x9e3779b9 + (seed << 6) + (seed >> 2);

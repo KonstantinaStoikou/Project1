@@ -1,5 +1,5 @@
 OBJS1 	= main_lsh.o hash.o read_functions.o point.o main_functions.o metrics.o h.o hashtable_lsh.o print_functions.o
-OBJS2 	= main_cube.o hash.o read_functions.o point.o main_functions.o h.o hashtable_cube.o print_functions.o hypercube_ht.o
+OBJS2 	= main_cube.o hash.o read_functions.o point.o main_functions.o h.o hashtable_cube.o hashtable_lsh.o print_functions.o hypercube_ht.o metrics.o f_function.o
 CC		= g++
 CFLAGS  = -std=c++11 -Wall -g
 TARGET = lsh cube
@@ -16,7 +16,7 @@ cube: $(OBJS2)
 main_lsh.o: src/main_lsh.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_lsh.h include/defines.h include/print_functions.h
 	$(CC) $(CFLAGS) -c src/main_lsh.cpp
 
-main_cube.o: src/main_cube.cpp include/read_functions.h include/point.h include/main_functions.h include/hashtable_cube.h include/defines.h include/print_functions.h include/hypercube_ht.h
+main_cube.o: src/main_cube.cpp include/read_functions.h include/point.h  include/main_functions.h include/hashtable_cube.h include/defines.h include/print_functions.h include/f_function.h
 	$(CC) $(CFLAGS) -c src/main_cube.cpp
 
 read_functions.o: src/read_functions.cpp include/point.h include/defines.h
@@ -25,7 +25,7 @@ read_functions.o: src/read_functions.cpp include/point.h include/defines.h
 hashtable_lsh.o: src/hashtable_lsh.cpp include/hash.h
 	$(CC) $(CFLAGS) -c src/hashtable_lsh.cpp	
 
-hashtable_cube.o: src/hashtable_cube.cpp include/hash.h
+hashtable_cube.o: src/hashtable_cube.cpp include/structures.h include/f_function.h include/hashtable_cube.h
 	$(CC) $(CFLAGS) -c src/hashtable_cube.cpp
 
 hash.o: src/hash.cpp include/h.h
@@ -43,11 +43,14 @@ h.o: src/h.cpp
 metrics.o: src/metrics.cpp
 	$(CC) $(CFLAGS) -c src/metrics.cpp
 
-main_functions.o: src/main_functions.cpp include/metrics.h
+main_functions.o: src/main_functions.cpp include/metrics.h include/hashtable_lsh.h include/point.h
 	$(CC) $(CFLAGS) -c src/main_functions.cpp
 
 print_functions.o: src/print_functions.cpp 
 	$(CC) $(CFLAGS) -c src/print_functions.cpp
+
+f_function.o: src/f_function.cpp 
+	$(CC) $(CFLAGS) -c src/f_function.cpp
 
 .PHONY: clean
 clean:
