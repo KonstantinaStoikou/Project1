@@ -28,7 +28,7 @@ int H::h_func(Point x) {
     // calculate h using modulo properties:
     // 1. (a+b) mod c = ((a mod c) + (b mod c)) mod c
     // 2. (a*b) mod c = ((a mod c) * (b mod c)) mod c
-    // 3. a^b mod c = ( (a mod c)^b ) mod c
+    // 3. (a^b) mod c = ( (a mod c)^b ) mod c
     // 4. (a mod c) mod c = a mod c
     // h(x) = (a^(d−1) + m*a^(d−2) + ... + m^(d−1)*a^0) mod M
     int h = 0;

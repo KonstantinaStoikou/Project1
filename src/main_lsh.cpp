@@ -23,10 +23,7 @@ int main(int argc, char const *argv[]) {
     }
 
     int dims = in_points.at(0).get_vector().size();
-    // for small dataset: avr_nn_dist = 14641.3
-    // for big dataset avr_nn_dist =
     const double w = find_avg_nn_dist(in_points) * 4;
-    // const double w = 14641.3 * 4;
     int table_size = in_points.size() / 8;
     // create vector with L hashtables
     std::vector<Hashtable_LSH *> ht_vec;
